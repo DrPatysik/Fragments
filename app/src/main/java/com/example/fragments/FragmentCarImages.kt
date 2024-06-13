@@ -33,6 +33,9 @@ class FragmentCarImages : Fragment() {
             if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE){
                 viewImageCar.setBackgroundColor(-1)
             }
+            else{
+                viewImageCar.setBackgroundColor(-16777216)
+            }
         }
 
     }

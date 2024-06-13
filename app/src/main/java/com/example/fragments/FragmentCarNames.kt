@@ -47,7 +47,6 @@ class FragmentCarNames : Fragment() {
         }
     }
 
-    //FIXME почему ,если я тут прописываю условие с if() не срабатывает так же,как если бы прописала выше?
     private fun showImageInLandscape(index: Int) {
 
         val fragmentCarImages = FragmentCarImages.newInstance(index)
