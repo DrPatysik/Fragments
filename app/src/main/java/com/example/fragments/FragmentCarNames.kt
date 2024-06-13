@@ -30,7 +30,7 @@ class FragmentCarNames : Fragment() {
         val viewLayout = view as LinearLayout
         val carNames = resources.getStringArray(R.array.retro_cars_name)
 
-        for (i in carNames.indices){
+        for (i in carNames.indices) {
             val carName = carNames[i]
             val txtView = TextView(context)
             txtView.text = carName
@@ -38,36 +38,46 @@ class FragmentCarNames : Fragment() {
             viewLayout.addView(txtView)
 
             txtView.setOnClickListener {
-                showImage(i)
+                if (isLandscape()) {
+                    showImageInLandscape(i)
+                } else {
+                    showImageInPortrait(i)
+                }
             }
         }
     }
 
     //FIXME почему ,если я тут прописываю условие с if() не срабатывает так же,как если бы прописала выше?
-    private fun showImage(index:Int) {
-        if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            val fragmentCarImages = FragmentCarImages.newInstance(index)
-            val fragmentManager = requireActivity().supportFragmentManager
-            val fragmentTransaction = fragmentManager.beginTransaction()
-            with(fragmentTransaction) {
+    private fun showImageInLandscape(index: Int) {
 
-                replace(R.id.landCarImage, fragmentCarImages)
-                setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                commit()
-            }
-        }
-            else {
-                val fragmentCarImages = FragmentCarImages.newInstance(index)
-                val fragmentManager = requireActivity().supportFragmentManager
-                val fragmentTransaction = fragmentManager.beginTransaction()
-                with(fragmentTransaction) {
+        val fragmentCarImages = FragmentCarImages.newInstance(index)
+        val fragmentManager = requireActivity().supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
 
-                    add(R.id.mainLayout, fragmentCarImages)
-                addToBackStack("")
-                setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                commit()
-            }
+        with(fragmentTransaction) {
+            replace(R.id.landCarImage, fragmentCarImages)
+            setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+            commit()
         }
+    }
+
+    private fun showImageInPortrait(index: Int) {
+        val fragmentCarImages = FragmentCarImages.newInstance(index)
+        val fragmentManager = requireActivity().supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+
+        with(fragmentTransaction) {
+            add(R.id.carNamesContainer, fragmentCarImages)
+            addToBackStack("")
+            setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+            commit()
+        }
+    }
+
+
+    private fun isLandscape(): Boolean {
+        return resources.configuration.orientation ==
+                Configuration.ORIENTATION_LANDSCAPE
     }
 
 
