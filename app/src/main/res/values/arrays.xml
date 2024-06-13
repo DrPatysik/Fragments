@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="retro_cars_name">
+        <item>1.Mercedes-Benz 540K Special Roadster</item>
+        <item>2.ГАЗ М-1 «Эмка»</item>
+        <item>3.ЗИЛ 112-S</item>
+        <item>4.Bugatti Type 41 Royale Kellner Coupe</item>
+        <item>5.Ferrari 250 GTO 1962</item>
+    </string-array>
+
+    <integer-array name="cars_imgs">
+        <item>@drawable/mers</item><!--Mercedes-Benz 540K Special Roadster-->
+        <item>@drawable/gaz</item><!--ГАЗ М-1 «Эмка» -->
+        <item>@drawable/zil</item><!--ЗИЛ 112-S -->
+        <item>@drawable/bugatti</item><!--Bugatti Type 41 Royale Kellner Coupe -->
+        <item>@drawable/ferrari</item><!--Ferrari 250 GTO 1962 -->
+    </integer-array>
+</resources>
