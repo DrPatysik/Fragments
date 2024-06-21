@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 
 private const val CHILD_KEY_CAR = "child key car"
 class ChildFragmentCarImage : Fragment() {
@@ -21,29 +22,37 @@ class ChildFragmentCarImage : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val viewImageCar = (view.findViewById<View>(R.id.imageCar) as ImageView)
+        val viewImageCar = view.findViewById<ImageView>(R.id.imageCar)
+        val images = resources.obtainTypedArray(R.array.cars_imgs)
+        val textView = view.findViewById<TextView>(R.id.tvCarName)
         val argument = arguments
-        argument?.let {
-            val car = it.getParcelable<Car>(CHILD_KEY_CAR)
-            val images = resources.obtainTypedArray(R.array.cars_imgs)
 
-            if (car != null){
-                viewImageCar.setImageResource(images.getResourceId(car.imageIndex,0))
+        if (argument != null) {
+            val car = argument.getParcelable<Car>(CHILD_KEY_CAR)
+
+            if (car != null) {
+                viewImageCar.setImageResource(images.getResourceId(car.imageIndex, 0))
+                textView.text = car.carName
                 images.recycle()
             }
-            else{
-                viewImageCar.setImageResource(images.getResourceId(0,0))
+            else {
+        //TODO если картинку не выбрали,то дефолтная картинка не появляется
+                viewImageCar.setImageResource(images.getResourceId(images.getIndex(0),0))
                 images.recycle()
             }
-
-            if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE){
-                viewImageCar.setBackgroundColor(-1)
-            }
-            else{
-                viewImageCar.setBackgroundColor(-16777216)
-                }
-
         }
+
+        if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            viewImageCar.setBackgroundColor(-1)
+        } else {
+            viewImageCar.setBackgroundColor(-16777216)
+            textView.setBackgroundColor(-16777216)
+            textView.setTextColor(-1)
+            textView.textSize = 35f
+        }
+
+
+
     }
 
     companion object {

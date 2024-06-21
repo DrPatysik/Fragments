@@ -41,9 +41,7 @@ class FragmentCarNames : Fragment() {
 
             txtView.setOnClickListener {
                 car = Car(i , carName)
-               // chooseOrientation(car)
-               // Bundle().putParcelable(CURRENT_CAR,car)
-              // private fun chooseOrientation(car1:Car?){
+
                    if (isLandscape()) {
                        showImageInLandscape(car)
                    } else {
@@ -53,9 +51,6 @@ class FragmentCarNames : Fragment() {
 
             }
         }
-    //}
-
-
 
     private fun showImageInLandscape(car1:Car?) {
 

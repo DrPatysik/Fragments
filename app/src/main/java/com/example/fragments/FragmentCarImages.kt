@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 
 private const val CURRENT_CAR = "currentCar"
+
 class FragmentCarImages : Fragment() {
 
     override fun onCreateView(
@@ -25,21 +26,33 @@ class FragmentCarImages : Fragment() {
         argument?.let {
             val car = it.getParcelable<Car>(CURRENT_CAR)
 
-            val textView = view.findViewById<TextView>(R.id.tvCarName)
-            textView.text = car?.carName
+            /*val textView = view.findViewById<TextView>(R.id.tvCarName_placeForChild)
+            textView.text = car?.carName*/
 
-            if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT){
-                textView.setBackgroundColor(-16777216)
+//TODO надо ли делить на две ориентации?
+            if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+                /*textView.setBackgroundColor(-16777216)
                 textView.setTextColor(-1)
-                textView.textSize = 35f
-            }
+                textView.textSize = 35f*/
+                // }
 
-            childFragmentManager
-                .beginTransaction()
-                .addToBackStack("")
-                .replace(R.id.imageCar_placeForChildFr,
-                    ChildFragmentCarImage.newInstance(car))
-                .commit()
+                childFragmentManager
+                    .beginTransaction()
+                    .addToBackStack("")
+                    .replace(
+                        R.id.imageCar_placeForChildFr,
+                        ChildFragmentCarImage.newInstance(car)
+                    )
+                    .commit()
+            }
+            else{
+                requireActivity().supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.landCarImage,
+                        ChildFragmentCarImage.newInstance(car))
+                    .replace(R.id.carNamesContainer,FragmentCarNames())
+                    .commit()
+            }
 
             /*val viewImageCar = view.findViewById<ImageView>(R.id.imageCar_placeForChild)
             val images = resources.obtainTypedArray(R.array.cars_imgs)
@@ -62,10 +75,10 @@ class FragmentCarImages : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(car:Car?): FragmentCarImages {
+        fun newInstance(car: Car?): FragmentCarImages {
             val fragment = FragmentCarImages()
             val bundle = Bundle()
-                bundle.putParcelable(CURRENT_CAR,car)
+            bundle.putParcelable(CURRENT_CAR, car)
 
             fragment.arguments = bundle
             return fragment

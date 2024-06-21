@@ -16,9 +16,7 @@ class MainActivity : AppCompatActivity() {
                 .commit()
         }
 
-
-
-            /*if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+        /*if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
                     supportFragmentManager
                         .beginTransaction()
                         .replace(R.id.carNamesContainer, FragmentCarNames())
