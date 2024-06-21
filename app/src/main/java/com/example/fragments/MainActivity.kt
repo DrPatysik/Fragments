@@ -9,18 +9,28 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.carNamesContainer, FragmentCarNames())
-                .replace(R.id.landCarImage, FragmentCarImages())
-                .commit()
-        } else {
+        if (savedInstanceState == null){
             supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.carNamesContainer,FragmentCarNames())
                 .commit()
         }
+
+
+
+            /*if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                    supportFragmentManager
+                        .beginTransaction()
+                        .replace(R.id.carNamesContainer, FragmentCarNames())
+                        .replace(R.id.landCarImage, FragmentCarImages())
+                        .commit()
+                }
+            else {
+            supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.carNamesContainer,FragmentCarNames())
+                .commit()
+            }*/
     }
 
 }

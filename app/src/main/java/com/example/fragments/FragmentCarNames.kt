@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentTransaction
 
 class FragmentCarNames : Fragment() {
 
+    private var car :Car? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -23,10 +24,11 @@ class FragmentCarNames : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initArray()
+        car = savedInstanceState?.getParcelable(CURRENT_CAR) as Car?
+        initArray(view)
     }
 
-    private fun initArray() {
+    private fun initArray(view: View) {
         val viewLayout = view as LinearLayout
         val carNames = resources.getStringArray(R.array.retro_cars_name)
 
@@ -38,18 +40,26 @@ class FragmentCarNames : Fragment() {
             viewLayout.addView(txtView)
 
             txtView.setOnClickListener {
-                if (isLandscape()) {
-                    showImageInLandscape(i)
-                } else {
-                    showImageInPortrait(i)
-                }
+                car = Car(i , carName)
+               // chooseOrientation(car)
+               // Bundle().putParcelable(CURRENT_CAR,car)
+              // private fun chooseOrientation(car1:Car?){
+                   if (isLandscape()) {
+                       showImageInLandscape(car)
+                   } else {
+                       showImageInPortrait(car)
+                   }
+               }
+
             }
         }
-    }
+    //}
 
-    private fun showImageInLandscape(index: Int) {
 
-        val fragmentCarImages = FragmentCarImages.newInstance(index)
+
+    private fun showImageInLandscape(car1:Car?) {
+
+        val fragmentCarImages = FragmentCarImages.newInstance(car)
         val fragmentManager = requireActivity().supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
 
@@ -60,8 +70,8 @@ class FragmentCarNames : Fragment() {
         }
     }
 
-    private fun showImageInPortrait(index: Int) {
-        val fragmentCarImages = FragmentCarImages.newInstance(index)
+    private fun showImageInPortrait(car1: Car?) {
+        val fragmentCarImages = FragmentCarImages.newInstance(car)
         val fragmentManager = requireActivity().supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
 
@@ -79,5 +89,8 @@ class FragmentCarNames : Fragment() {
                 Configuration.ORIENTATION_LANDSCAPE
     }
 
+    companion object{
+        private const val CURRENT_CAR = "currentCar"
+    }
 
 }

@@ -6,15 +6,23 @@
     tools:context=".FragmentCarImages"
     android:clickable="true"
     android:focusable="true"
+    android:orientation="vertical"
     >
 
-    <ImageView
-        android:id="@+id/imageCar"
+    <TextView
+        android:id="@+id/tvCarName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="25sp"
+        android:fontFamily="@font/bodoni_initials"
+        android:paddingTop="10sp"
+        />
+
+    <FrameLayout
+        android:id="@+id/imageCar_placeForChildFr"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:contentDescription="image of car">
-
-    </ImageView>
-
+        />
 
 </LinearLayout>

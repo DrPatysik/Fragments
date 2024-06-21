@@ -6,10 +6,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import androidx.core.view.VelocityTrackerCompat.recycle
+import android.widget.TextView
 
-
+private const val CURRENT_CAR = "currentCar"
 class FragmentCarImages : Fragment() {
 
     override fun onCreateView(
@@ -24,32 +23,52 @@ class FragmentCarImages : Fragment() {
 
         val argument = arguments
         argument?.let {
-            val indexImageCar = it.getInt(KEY_INDEX)
-            val viewImageCar = view.findViewById<ImageView>(R.id.imageCar)
-            val images = resources.obtainTypedArray(R.array.cars_imgs)
-            viewImageCar.setImageResource(images.getResourceId(indexImageCar,0))
-            images.recycle()
+            val car = it.getParcelable<Car>(CURRENT_CAR)
 
-            if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE){
+            val textView = view.findViewById<TextView>(R.id.tvCarName)
+            textView.text = car?.carName
+
+            if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT){
+                textView.setBackgroundColor(-16777216)
+                textView.setTextColor(-1)
+                textView.textSize = 35f
+            }
+
+            childFragmentManager
+                .beginTransaction()
+                .addToBackStack("")
+                .replace(R.id.imageCar_placeForChildFr,
+                    ChildFragmentCarImage.newInstance(car))
+                .commit()
+
+            /*val viewImageCar = view.findViewById<ImageView>(R.id.imageCar_placeForChild)
+            val images = resources.obtainTypedArray(R.array.cars_imgs)
+            viewImageCar.setImageResource(images.getResourceId(car?.imageIndex?:0,0))
+            images.recycle()*/
+
+
+            /*if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE){
                 viewImageCar.setBackgroundColor(-1)
             }
             else{
                 viewImageCar.setBackgroundColor(-16777216)
-            }
+                textView.setBackgroundColor(-16777216)
+                textView.setTextColor(-1)
+                textView.textSize = 35f
+            }*/
         }
 
     }
 
     companion object {
-        const val KEY_INDEX = "index"
         @JvmStatic
-        fun newInstance(index:Int): FragmentCarImages {
+        fun newInstance(car:Car?): FragmentCarImages {
             val fragment = FragmentCarImages()
             val bundle = Bundle()
-                bundle.putInt(KEY_INDEX,index)
+                bundle.putParcelable(CURRENT_CAR,car)
 
             fragment.arguments = bundle
             return fragment
-            }
+        }
     }
 }
